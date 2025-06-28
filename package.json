@@ -74,7 +74,7 @@
     "socket.io-client": "^4.7.5",
     "sort-by": "^1.2.0",
     "styled-components": "^6.1.8",
-    "sweetalert2": "^11.7.27",
+    "sweetalert2": "^11.22.1",
     "swiper": "^8.4.5",
     "uuidv4": "^6.2.13",
     "yarn": "^1.22.19",

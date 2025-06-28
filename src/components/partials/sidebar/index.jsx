@@ -66,7 +66,22 @@ const Sidebar = () => {
         }
       ],
     },
+     {
+      isHeadr: true,
+      title: "Request Management",
+    },
+    {
+      title: "Request",
+      icon: "material-symbols:supervised-user-circle",
+      child: [
+        {
+          childtitle: "Request List ",
+          childlink: "request",
+        }
+      ],
+    },
   ];
+
 
 
   useEffect(() => {

@@ -70,7 +70,7 @@ const Navmenu = ({ menus }) => {
       }
     });
     // document.title = `Stage Driving | ${locationName}`;
-    document.title = `Kosmo |`;
+    document.title = `SAAS Ecom`;
 
     setActiveSubmenu(submenuIndex);
     setMultiMenu(multiMenuIndex);

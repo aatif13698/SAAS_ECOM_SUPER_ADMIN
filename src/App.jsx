@@ -6,10 +6,12 @@ const Profile = lazy(() => import("./pages/profile/profile"));
 const ViewProfile = lazy(() => import("./pages/profile/viewProfile"));
 const OtpVerify = lazy(() => import("./pages/auth/OtpVerify"));
 
-const Vendors = lazy(() => import("./pages/vendor/Vendor") )
-const CreateVendor = lazy(() => import("./pages/vendor/CreateVendor") );
+const Vendors = lazy(() => import("./pages/vendor/Vendor"))
+const CreateVendor = lazy(() => import("./pages/vendor/CreateVendor"));
 const Category = lazy(() => import("./pages/category/Category"));
-const SubCategory = lazy(() => import("./pages/subcategory/SubCategory"))
+const SubCategory = lazy(() => import("./pages/subcategory/SubCategory"));
+const Request = lazy(() => import("./pages/request/Request"));
+const CreateDemoRequest = lazy(() => import("./pages/request/CreateDemoRequest"))
 
 
 
@@ -93,7 +95,7 @@ function App() {
                   path="*"
                   element={<Error roleId={currentUser?.roleId} />}
                 />
-               
+
 
                 {/* ---- Profile Routes ----- */}
                 <Route path="profile" element={<Profile />} />
@@ -101,8 +103,11 @@ function App() {
                 <Route path="business-unit" element={<BusinessUnit />} />
                 <Route path="vendors-list" element={<Vendors roleId={currentUser?.roleId} />} />
                 <Route path="create-vendor" element={<CreateVendor roleId={currentUser?.roleId} />} />
-                <Route path="category" element={<Category /> } />
-                <Route path="subcategory" element={<SubCategory /> } />
+                <Route path="category" element={<Category />} />
+                <Route path="subcategory" element={<SubCategory />} />
+                <Route path="request" element={<Request />} />
+                <Route path="create/request" element={<CreateDemoRequest />} />
+                <Route path="view/request" element={<CreateDemoRequest />} />
 
               </Route>
             </Route>

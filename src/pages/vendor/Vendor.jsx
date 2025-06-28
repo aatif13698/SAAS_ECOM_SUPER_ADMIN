@@ -399,7 +399,7 @@ const Vendors = ({ roleId }) => {
     debounceFunction(
       async (nextValue) => {
         try {
-          const response = await vendorService.getAllVendors(page, keyWord = nextValue, perPage);
+          const response = await vendorService.getAllVendors(page, nextValue, perPage);
           setTotalRows(response?.count);
           setPaginationData(response?.listOfVendor);
         } catch (error) {
