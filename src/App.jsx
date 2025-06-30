@@ -11,7 +11,9 @@ const CreateVendor = lazy(() => import("./pages/vendor/CreateVendor"));
 const Category = lazy(() => import("./pages/category/Category"));
 const SubCategory = lazy(() => import("./pages/subcategory/SubCategory"));
 const Request = lazy(() => import("./pages/request/Request"));
-const CreateDemoRequest = lazy(() => import("./pages/request/CreateDemoRequest"))
+const CreateDemoRequest = lazy(() => import("./pages/request/CreateDemoRequest"));
+const Query = lazy(() => import("./pages/query/Query"));
+const CreateQuery = lazy(() => import("./pages/query/CreateQuery"))
 
 
 
@@ -108,6 +110,9 @@ function App() {
                 <Route path="request" element={<Request />} />
                 <Route path="create/request" element={<CreateDemoRequest />} />
                 <Route path="view/request" element={<CreateDemoRequest />} />
+                <Route path="query" element={<Query />} /> 
+                <Route path="view/query" element={<CreateQuery />} />
+
 
               </Route>
             </Route>

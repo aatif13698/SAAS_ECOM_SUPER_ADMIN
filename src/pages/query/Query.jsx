@@ -19,12 +19,12 @@ import { DialogContent } from "@mui/material";
 import IconImg from "../../assets/images/aestree-logo.png"
 import { icon } from 'leaflet';
 import tableConfigure from '../common/tableConfigure';
-import requestService from '@/services/request/request.service';
+import queryService from '@/services/query/query.service';
 
 
 
 
-function Request({ centered, noFade, scrollContent }) {
+function Query({ centered, noFade, scrollContent }) {
     const [isDark] = useDarkmode()
     const { noDataStyle, customStyles } = tableConfigure();
     const navigate = useNavigate()
@@ -111,7 +111,7 @@ function Request({ centered, noFade, scrollContent }) {
             async (nextValue) => {
                 try {
                     setPending(true)
-                    const response = await requestService.getAllList({ page, keyword: nextValue, perPage })
+                    const response = await queryService.getAllList({ page, keyword: nextValue, perPage })
                     setPaginationData(response?.data?.categories)
                     setTotalRows(response?.data?.count)
                     setPending(false)
@@ -206,7 +206,7 @@ function Request({ centered, noFade, scrollContent }) {
             if (id) {
                 try {
                     formData.append("categoryId", id)
-                    const response = await requestService.update(formData)
+                    const response = await queryService.update(formData)
                     closeModal()
                     toast.success(response.data.message)
 
@@ -217,7 +217,7 @@ function Request({ centered, noFade, scrollContent }) {
                 }
             } else {
                 try {
-                    const response = await requestService?.create(formData)
+                    const response = await queryService?.create(formData)
                     closeModal()
                     toast.success(response.data.message)
                 } catch (error) {
@@ -232,10 +232,10 @@ function Request({ centered, noFade, scrollContent }) {
       async function handleView(row) {
         try {
                 setShowLoadingModal(true)
-                const response = await requestService.getParticularRequest(row?._id);
+                const response = await queryService.getParticularQuery(row?._id);
                 setShowLoadingModal(false);
                 setTimeout(() => {
-                    navigate("/view/request", { state: { client: response?.data?.data?.data } })
+                    navigate("/view/query", { state: { client: response?.data?.data?.data } })
                 }, 600);
            
         } catch (error) {
@@ -274,7 +274,7 @@ function Request({ centered, noFade, scrollContent }) {
         //     showCancelButton: true,
         //     confirmButtonColor: isDark ? "#FF4C4C" : "#DC3545",
         //     cancelButtonColor: isDark ? "rgb(110 147 143)" : "rgb(4 203 182)",
-        //     background: isDark ? "rgb(29 55 54)" : "#FFFFFF",
+        //     // background: isDark ? "rgb(29 55 54)" : "#FFFFFF",
         //     color: isDark ? "#FFFFFF" : "#000000",
         // }).then((result) => {
         //     if (result.isConfirmed) {
@@ -286,8 +286,8 @@ function Request({ centered, noFade, scrollContent }) {
 
     async function deleteOne({ id, page, keyword: keyWord, perPage }) {
         try {
-            const response = await requestService.deleteOne({ id, page, keyword: keyWord, perPage })
-            toast.success("Request deleted successfully.");
+            const response = await queryService.deleteOne({ id, page, keyword: keyWord, perPage })
+            toast.success("Query delete successfully.");
             setRefresh((prev) => prev + 1)
         } catch (error) {
             console.log("Error while deleting Business Unit", error);
@@ -301,7 +301,7 @@ function Request({ centered, noFade, scrollContent }) {
         setShowLoadingModal(true)
         row.isActive ? (status = "0") : (status = "1")
         try {
-            const response = await requestService.activeInActive({ id, status, page, keyword: keyWord, perPage })
+            const response = await queryService.activeInActive({ id, status, page, keyword: keyWord, perPage })
             setShowLoadingModal(false)
             setRefresh((prev) => prev + 1)
         } catch (error) {
@@ -338,7 +338,7 @@ function Request({ centered, noFade, scrollContent }) {
             name: "Message",
             selector: (row) => row.message,
         },
-        
+       
         {
             name: "Action",
             selector: (row) => {
@@ -386,7 +386,7 @@ function Request({ centered, noFade, scrollContent }) {
 
     async function getAllList(data) {
         try {
-            const response = await requestService.getAllList(data);
+            const response = await queryService.getAllList(data);
             console.log("response",response);
             
             setPaginationData(response?.data?.data?.data)
@@ -400,7 +400,7 @@ function Request({ centered, noFade, scrollContent }) {
 
     const handlePerRowChange = async (perPage) => {
         try {
-            const response = await requestService.getAllList({ page, keyword: keyWord, perPage })
+            const response = await queryService.getAllList({ page, keyword: keyWord, perPage })
             setPaginationData(response?.data?.categories)
             setTotalRows(response?.data?.count)
             setPerPage(perPage)
@@ -413,7 +413,7 @@ function Request({ centered, noFade, scrollContent }) {
 
     const handlePageChange = async (page) => {
         try {
-            const response = await requestService.getAllList({ page, keyword: keyWord, perPage })
+            const response = await queryService.getAllList({ page, keyword: keyWord, perPage })
             setPaginationData(response?.data?.categories)
             setTotalRows(response?.data?.count)
             setPage(page)
@@ -462,8 +462,8 @@ function Request({ centered, noFade, scrollContent }) {
     };
     const subHeaderComponent = (
         <div className="w-full grid xl:grid-cols-2 md:grid-cols-1 md:text-start gap-3  ">
-            <div className="grid lg:justify-start md:justify-start">
-               List Request
+             <div className="grid lg:justify-start md:justify-start">
+               List Query
             </div>
             <div className="grid lg:justify-end md:justify-start">
                 <input
@@ -473,6 +473,7 @@ function Request({ centered, noFade, scrollContent }) {
                     onChange={handleFilter}
                 />
             </div>
+           
         </div>
     );
 
@@ -514,216 +515,7 @@ function Request({ centered, noFade, scrollContent }) {
                         </div>
                     }
                 />
-                {/* model */}
-                <Transition appear show={showModal} as={Fragment}>
-                    <Dialog
-                        as="div"
-                        className="relative z-[99999]"
-                        onClose={closeModal}
-                    >
-                        {(
-                            <Transition.Child
-                                as={Fragment}
-                                enter={noFade ? "" : "duration-300 ease-out"}
-                                enterFrom={noFade ? "" : "opacity-0"}
-                                enterTo={noFade ? "" : "opacity-100"}
-                                leave={noFade ? "" : "duration-200 ease-in"}
-                                leaveFrom={noFade ? "" : "opacity-100"}
-                                leaveTo={noFade ? "" : "opacity-0"}
-                            >
-                                <div className="fixed inset-0 bg-slate-900/50 backdrop-filter backdrop-blur-sm" />
-                            </Transition.Child>
-                        )}
-                        <div className="fixed inset-0 overflow-y-auto">
-                            <div
-                                className={`flex min-h-full justify-center text-center p-6 items-center "
-                                    }`}
-                            >
-                                <Transition.Child
-                                    as={Fragment}
-                                    enter={noFade ? "" : "duration-300  ease-out"}
-                                    enterFrom={noFade ? "" : "opacity-0 scale-95"}
-                                    enterTo={noFade ? "" : "opacity-100 scale-100"}
-                                    leave={noFade ? "" : "duration-200 ease-in"}
-                                    leaveFrom={noFade ? "" : "opacity-100 scale-100"}
-                                    leaveTo={noFade ? "" : "opacity-0 scale-95"}
-                                >
-                                    <Dialog.Panel
-                                        className={`w-full transform overflow-hidden rounded-md
-                                        text-left align-middle shadow-xl transition-alll max-w-3xl ${isDark ? "bg-darkSecondary text-white" : "bg-light"}`}
-                                    >
-                                        <div
-                                            className={`relative overflow-hidden py-4 px-5 text-lightModalHeaderColor flex justify-between bg-white border-b border-lightBorderColor dark:bg-darkInput dark:border-b dark:border-darkSecondary `}
-                                        >
-                                            <h2 className="capitalize leading-6 tracking-wider  text-xl font-semibold text-lightModalHeaderColor dark:text-darkTitleColor">
-                                                Create Category
-                                            </h2>
-                                            <button onClick={closeModal} className=" text-lightmodalCrosscolor hover:text-lightmodalbtnText text-[22px]">
-                                                <Icon icon="heroicons-outline:x" />
-                                            </button>
-                                        </div>
-                                        <div
-                                            className={`px-0 py-8 ${scrollContent ? "overflow-y-auto max-h-[400px]" : ""
-                                                }`}
-                                        >
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 overflow-hidden p-4">
-                                                <div className=" ">
-                                                    <label>
-                                                        <p className={`mb-1 ${isDark ? "text-white" : "text-black"}`}>
-                                                            Category Name <span className="text-red-500">*</span>
-                                                        </p>
-                                                        <input
-                                                            name="name"
-                                                            type="text"
-                                                            value={name}
-                                                            placeholder="Enter category name"
-                                                            onChange={handleChange}
-                                                            readOnly={isViewed}
-                                                            className="form-control py-2"
-                                                        />
-                                                        {<p className="text-red-600  text-xs"> {formDataErr.name}</p>}
-                                                    </label>
-                                                </div>
-                                                <div className=" ">
-                                                    <label>
-                                                        <p className={`mb-1 ${isDark ? "text-white" : "text-black"}`}>
-                                                            Slug
-                                                        </p>
-                                                        <input
-                                                            name="slug"
-                                                            type="text"
-                                                            value={slug}
-                                                            placeholder="Enter Slug"
-                                                            onChange={handleChange}
-                                                            readOnly={isViewed}
-                                                            className="form-control py-2"
-                                                        />
-                                                        {<p className="text-red-600  text-xs"> {formDataErr.slug}</p>}
-                                                    </label>
-                                                </div>
-                                                <div className="md:col-span-2">
-                                                    <label style={{ marginBottom: "4px" }}>
-                                                        <p className={`mb-1 ${isDark ? "text-white" : "text-black"}`}>
-                                                            Description <span className="text-red-500">*</span>
-                                                        </p>
-                                                    </label>
-                                                    <textarea
-                                                        name='description'
-                                                        className={` form-control py-2 `}
-                                                        placeholder="Enter description"
-                                                        value={description}
-                                                        rows={3}
-                                                        disabled={isViewed}
-
-                                                        onChange={handleChange}
-                                                    ></textarea>
-                                                    {<p className="text-red-600  text-xs"> {formDataErr.description}</p>}
-                                                </div>
-                                                <div
-                                                    className={`md:col-span-2 ${formDataErr?.icon !== "" ? "has-error" : ""}  mt-2 form-control  px-4 py-2 `}
-                                                >
-                                                    <p className="form-label">
-                                                        Category Icon
-                                                        <span className="text-red-500">*</span>
-                                                    </p>
-                                                    <label
-                                                        htmlFor={isViewed ? "" : "imageInput"}
-                                                        className="cursor-pointer"
-                                                    >
-                                                        <div
-                                                            htmlFor="imageInput"
-                                                            className="flex flex-col items-center justify-between "
-                                                        >
-                                                            <label
-                                                                htmlFor={isViewed ? "" : "imageInput"}
-                                                                className="cursor-pointer"
-                                                            >
-                                                                <img
-                                                                    src={
-                                                                        imgPreview ? imgPreview : IconImg
-                                                                    }
-                                                                    alt="Default"
-                                                                    className="w-16 h-16 object-cover"
-                                                                />
-                                                            </label>
-                                                            <input
-                                                                name="profileImage"
-                                                                id="imageInput"
-                                                                type="file"
-                                                                className="hidden"
-                                                                accept="image/*"
-                                                                onChange={handleFileChange}
-                                                            />
-                                                            <span style={{ color: "red", fontSize: "0.7em" }}>
-                                                                {iconImgErr}
-                                                            </span>
-                                                            <label
-                                                                htmlFor="imageInput"
-                                                                className="text-sm mt-2 text-gray-500 cursor-pointer"
-                                                            >
-                                                                <p
-                                                                    className={`${isDark ? "text-secondary-300" : ""
-                                                                        }`}
-                                                                >
-                                                                    {!imgPreview ? "click to upload icon" : selectedFile?.name}
-                                                                </p>
-                                                            </label>{" "}
-                                                            {
-                                                                <p className="text-sm text-red-500">
-                                                                    {formDataErr.icon}
-                                                                </p>
-                                                            }
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {(
-                                            <div className="px-4 py-3 flex justify-end space-x-3 border-t border-slate-100 dark:border-darkSecondary  bg-white dark:bg-darkInput ">
-                                                <div className="flex gap-2">
-                                                    <Button
-                                                        text="Cancel"
-                                                        // className="border bg-red-300 rounded px-5 py-2"
-                                                        className="bg-lightmodalBgBtnHover lightmodalBgBtn text-white hover:bg-lightmodalBgBtn hover:text-lightmodalbtnText  px-4 py-2 rounded"
-                                                        onClick={() => closeModal()}
-                                                    />
-
-                                                    {
-                                                        isViewed && (
-                                                            <Button
-                                                                text="Edit"
-                                                                // className="border bg-blue-gray-300 rounded px-5 py-2"
-                                                                className={` bg-lightBtn dark:bg-darkBtn px-4 py-2 rounded`}
-                                                                onClick={() => setIsViewed(false)}
-                                                                isLoading={loading}
-                                                            />
-
-                                                        )
-                                                    }
-                                                    {
-                                                        !isViewed && (
-                                                            <Button
-                                                                text={`${id ? "Update" : "Save"}`}
-                                                                // className="border bg-blue-gray-300 rounded px-5 py-2"
-                                                                className={` bg-lightBtn hover:bg-lightBtnHover dark:bg-darkBtn hover:dark:bg-darkBtnHover text-white dark:hover:text-black-900  px-4 py-2 rounded`}
-                                                                onClick={handleSubmit}
-                                                                isLoading={loading}
-                                                            />
-
-                                                        )
-                                                    }
-
-
-                                                </div>
-                                            </div>
-                                        )}
-                                    </Dialog.Panel>
-                                </Transition.Child>
-                            </div>
-                        </div>
-                    </Dialog>
-                </Transition>
+               
 
                 {/* loding dialog */}
                 <Transition appear show={showLoadingModal} as={Fragment}>
@@ -783,4 +575,4 @@ function Request({ centered, noFade, scrollContent }) {
     )
 }
 
-export default Request
+export default Query

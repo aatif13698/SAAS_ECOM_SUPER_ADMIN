@@ -63,7 +63,7 @@ const getAllList = async ({ page, keyword, perPage }) => {
 
 const deleteOne = async ({id, page, keyword: keyWord, perPage }) => {
     const authToken = await localStorage.getItem("saas_token");
-    return await axios.post(`${import.meta.env.VITE_BASE_URL}/api/superAdmin/category/softDeleteCategory/`, {categoryId: id,page, keyword: keyWord, perPage } ,{
+    return await axios.post(`${import.meta.env.VITE_BASE_URL}/api/superAdmin/request/delete/demoRequest`, {clientId: id,page, keyword: keyWord, perPage } ,{
         headers: {
             Authorization: `Bearer ${authToken}`,
         }

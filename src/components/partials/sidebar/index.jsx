@@ -80,6 +80,22 @@ const Sidebar = () => {
         }
       ],
     },
+
+     {
+      isHeadr: true,
+      title: "Query Management",
+    },
+
+     {
+      title: "Query",
+      icon: "material-symbols:supervised-user-circle",
+      child: [
+        {
+          childtitle: "Query List ",
+          childlink: "query",
+        }
+      ],
+    },
   ];
 
 

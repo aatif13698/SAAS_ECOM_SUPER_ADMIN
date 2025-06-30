@@ -51,7 +51,39 @@ export const menuItems = [
         childlink: "subcategory",
       }
     ],
-  },];
+  },
+
+  {
+      isHeadr: true,
+      title: "Request Management",
+    },
+    {
+      title: "Request",
+      icon: "material-symbols:supervised-user-circle",
+      child: [
+        {
+          childtitle: "Request List ",
+          childlink: "request",
+        }
+      ],
+    },
+
+     {
+      isHeadr: true,
+      title: "Query Management",
+    },
+
+     {
+      title: "Query",
+      icon: "material-symbols:supervised-user-circle",
+      child: [
+        {
+          childtitle: "Query List ",
+          childlink: "query",
+        }
+      ],
+    },
+];
 
 
 export const topMenu = [
