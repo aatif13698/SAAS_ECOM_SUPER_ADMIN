@@ -240,7 +240,7 @@ function Category({ centered, noFade, scrollContent }) {
             slug: row?.slug,
             description: row?.description
         }));
-        setImgPreviwe(`http://localhost:8088/icon/${row?.icon}`)
+        setImgPreviwe(`${row?.icon}`)
         setFormDataErr((prev) => ({
             ...prev,
             name: "",
@@ -263,7 +263,7 @@ function Category({ centered, noFade, scrollContent }) {
             slug: row?.slug,
             description: row?.description
         }))
-        setImgPreviwe(`http://localhost:8088/icon/${row?.icon}`)
+        setImgPreviwe(`${row?.icon}`)
         setFormDataErr((prev) => ({
             ...prev,
             name: "",
